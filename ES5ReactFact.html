@@ -1,0 +1,43 @@
+var React = require('react');
+var useState = React.useState;
+
+var FactorialCalculator = React.createClass({
+  getInitialState: function() {
+    return {
+      number: '',
+      factorial: null
+    };
+  },
+  calculateFactorial: function() {
+    var num = parseInt(this.state.number);
+    if (!isNaN(num)) {
+      var fact = 1;
+      for (var i = 1; i <= num; i++) {
+        fact *= i;
+      }
+      this.setState({ factorial: fact });
+    } else {
+      this.setState({ factorial: null });
+    }
+  },
+  handleInputChange: function(event) {
+    this.setState({ number: event.target.value });
+  },
+  render: function() {
+    return (
+      React.createElement('div', null,
+        React.createElement('h1', null, 'Factorial Calculator'),
+        React.createElement('label', null, 'Enter a number: '),
+        React.createElement('input', {
+          type: 'number',
+          value: this.state.number,
+          onChange: this.handleInputChange
+        }),
+        React.createElement('button', { onClick: this.calculateFactorial }, 'Calculate Factorial'),
+        this.state.factorial !== null && React.createElement('p', null, 'Factorial: ' + this.state.factorial)
+      )
+    );
+  }
+});
+
+module.exports = FactorialCalculator;
